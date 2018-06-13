@@ -2,10 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>learning-curve</title>
+    <title>The greatest news app ever</title>
+     <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css">
   </head>
   <body>
-    <div id="app"></div>
-    <script src="/dist/build.js"></script>
+    <div class="container" id="app">
+      <h3 class="text-center">VjuNews</h3> 
+	      <div class="row" v-for="posts in processedPosts">
+	     	<div class="columns medium-3" v-for="post in posts">
+	  			<div class="card">
+	    			<div class="card-divider">
+	      				{{ post.title }}
+	    			</div>
+	    			<a :href="post.url" target="_blank"><img :src="post.image_url"></a>
+	    			<div class="card-section">
+	      				<p>{{ post.abstract }}.</p>
+	    			</div>
+	  			</div>
+			</div>
+	    </div>
+	<script src="src/app.js"></script>	
   </body>
 </html>
+
