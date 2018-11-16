@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  vue:
+    build: .
+    container_name: learning-curve
+    restart: always
+    ports:
+      - "3000:3000"
+    command:
+      "npm run dev"
+
+
