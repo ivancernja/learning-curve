@@ -1,21 +1,24 @@
 const NYTBaseUrl = "https://api.nytimes.com/svc/topstories/v2/";
 const ApiKey = "b1f407bc0d6d4b73a3d84f132c95aa74";
+const SECTIONS = "home, arts, automobiles, books, business, fashion, food, health, insider, magazine, movies, national, nyregion, obituaries, opinion, politics, realestate, science, sports, sundayreview, technology, theater, tmagazine, travel, upshot, world"; // From NYTimes
+
 
 function buildUrl (url) {
 	return NYTBaseUrl + url + ".json?api-key=" + ApiKey
 }
+
 
 Vue.component('news-list', {
   props: ['results'],
   template: `
     <section>
       <div class="row" v-for="posts in processedPosts">
-        <div class="columns large-3 medium-6" v-for="post in posts">
+        <div class="columns large-4 medium-6" v-for="post in posts">
           <div class="card">
           <div class="card-divider">
           {{ post.title }}
           </div>
-          <a :href="post.url" target="_blank"><img :src="post.image_url"></a>
+          <a :href="post.url" target="_blank"><img :src="post.image_url" style="height: 250px;"></a>
           <div class="card-section">
             <p>{{ post.abstract }}</p>
           </div>
@@ -31,7 +34,7 @@ Vue.component('news-list', {
         post.image_url = imgObj ? imgObj.url : "http://placehold.it/300x200?text=N/A";
       });
 
-      let i, j, chunkedArray = [], chunk = 4;
+      let i, j, chunkedArray = [], chunk = 3;
       for (i=0, j=0; i < posts.length; i += chunk, j++) {
         chunkedArray[j] = posts.slice(i,i+chunk);
       }
@@ -40,10 +43,13 @@ Vue.component('news-list', {
   }
 });
 
+
 const vm = new Vue({
   el: '#app',
   data: {
-    results: []
+    results: [],
+    sections: SECTIONS.split(', '),
+    section: 'home'
   },
   mounted () {
     this.getPosts('home');
